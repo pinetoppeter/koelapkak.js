@@ -1,6 +1,8 @@
 # koelapkak.js
 
-A small JavaScript lib that helps you position DOM elements inside a container. The algorithm(s) try to position each element in a way so no other elements are intersected. 
+A small JavaScript lib that helps you position DOM elements inside a container. The algorithm(s) try to position each element in a way so no other elements will be overlapped. 
+
+![example](example-1.png "Example Layout")
 
 Written in TypeScript without further dependencies.
 
