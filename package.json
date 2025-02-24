@@ -1,0 +1,25 @@
+{
+  "name": "koelapkak.js",
+  "version": "0.0.1",
+  "type": "module",
+  "keywords": [
+    "html tiles arrangement",
+    "arrange dom elements",
+    "position dom elements"
+  ],
+  "repository": {
+    "url": "https://github.com/pinetoppeter/koelapkak.js"
+  },
+  "author": "Peter Hörmeyer",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsup",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.6",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.1"
+  }
+}

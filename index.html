@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      #container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        counter-reset: tilesCounter;
+      }
+
+      #container > div {
+        counter-increment: tilesCounter;
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        padding: .25rem;
+        transition: all 1s;
+      }
+
+      #container > div::after {
+        position: absolute;
+        padding: 1rem;
+        color: rebeccapurple;
+        inset: 0;
+        content: "" counter(tilesCounter) "";
+        display: inline;
+        font-size: 5rem;
+      }
+
+      #container > div.smaller {
+        width: 300px;
+        height: 200px;
+      }
+
+      #container > div.larger {
+        width: 500px;
+        height: 500px;
+      }
+
+      #container > div.wider {
+        width: 70%;
+        height: 300px;
+      }
+
+      #container > div > div {
+        width: 100%;
+        height: 100%;
+        border: 2px dashed rebeccapurple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button id="btn-add">&nbsp;+&nbsp;</button>
+      <button id="btn-remove">&nbsp;-&nbsp;</button>
+    </div>
+    <div id="container">
+        <div><div></div></div>
+        <div class="smaller"><div></div></div>
+        <div><div></div></div>
+        <div class="larger"><div></div></div>
+        <div><div></div></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
