@@ -1,12 +1,15 @@
 {
   "name": "koelapkak.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "keywords": [
     "html tiles arrangement",
     "arrange dom elements",
     "position dom elements"
   ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "url": "https://github.com/pinetoppeter/koelapkak.js"
   },
