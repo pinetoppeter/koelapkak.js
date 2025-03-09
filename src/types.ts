@@ -21,7 +21,13 @@ export interface ChildElement {
 }
 
 export interface KoelapkakOptions {
-    listenForWindowResize?: boolean
+    listenForWindowResize?: boolean,
+    direction?: Direction
+}
+
+export enum Direction {
+    LEFT_TO_RIGHT,
+    RIGHT_TO_LEFT
 }
 
 export default Dimensions;

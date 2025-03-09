@@ -28,7 +28,8 @@ const arrange = (children: ChildElement[], windowWidth: number, rows: ChildEleme
         }
         else {
             child.newPosition.offset.left = rows[rowIndex]?.[colIndex - 1]?.newPosition
-                ? (rows[rowIndex][colIndex - 1].newPosition?.offset.left + rows[rowIndex][colIndex - 1].dimensions.boundingRect.width)
+                ? (rows[rowIndex][colIndex - 1].newPosition?.offset.left
+                + rows[rowIndex][colIndex - 1].dimensions.boundingRect.width)
                 : 0;
         }
 

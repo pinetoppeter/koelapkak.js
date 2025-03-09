@@ -3,12 +3,15 @@
  */
 
 import { Koelapkak } from "./lib";
+import { Direction } from "./types";
 
-Koelapkak.init('#container');
 // with options
-// Koelapkak.init('#container', {listenForWindowResize: true});
+Koelapkak.init('#container', {
+  listenForWindowResize: true,
+  direction: Direction.RIGHT_TO_LEFT
+});
 
-const randomClass = (): string|null => {
+const randomClass = (): string | null => {
   const classes = [null, 'smaller', 'larger', 'wider'];
   return classes[Math.floor(Math.random() * classes.length)];
 }
@@ -31,7 +34,7 @@ function add() {
 function remove() {
   const children = document.getElementById('container')!.children;
   const lastChild = Array.from(children).pop();
-  
+
   if (lastChild) {
     document.getElementById('container')?.removeChild(lastChild);
   }
