@@ -5,10 +5,10 @@
 import { Koelapkak } from "./lib";
 import { Direction } from "./types";
 
-// with options
+// init with optional options
 Koelapkak.init('#container', {
   listenForWindowResize: true,
-  direction: Direction.RIGHT_TO_LEFT
+  direction: Direction.LEFT_TO_RIGHT
 });
 
 const randomClass = (): string | null => {

@@ -1,8 +1,13 @@
 interface Dimensions {
     boundingRect: DOMRect,
-    padding: Offset,
-    border: Offset,
-    margin: Offset
+    outerWidth: number,
+    outerHeight: number,
+    margin: {
+        top: number,
+        left: number,
+        right: number,
+        bottom: number,
+    }
 }
 
 interface Offset {

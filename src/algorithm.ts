@@ -8,11 +8,22 @@ const rowByRow = (containerRect: Dimensions, children: ChildElement[]): ChildEle
     return arrange(children, availableSpace, rows);
 }
 
-const arrange = (children: ChildElement[], windowWidth: number, rows: ChildElement[][]): ChildElement[][] => {
+/**
+ * 
+ * Sets a new top and left position for each element
+ * and returns a 2 dimensional array of elements
+ * strutured by rows and columns.
+ * 
+ * @param children 
+ * @param containerWidth 
+ * @param rows 
+ * @returns 
+ */
+const arrange = (children: ChildElement[], containerWidth: number, rows: ChildElement[][]): ChildElement[][] => {
     let rowIndex = 0;
     let colIndex = 0;
 
-    while (children.length) {
+    while (children.length > 0) {
         let child = children.pop();
 
         if (!child) {
@@ -20,20 +31,27 @@ const arrange = (children: ChildElement[], windowWidth: number, rows: ChildEleme
         }
 
         let horizontalSpace = availableHorizontalSpace(rows[rowIndex]
-            ?.reduce((carry, elem) => carry - (elem.dimensions.boundingRect.width ?? 0), windowWidth) ?? windowWidth, child);
-   
+            ?.reduce((carry, elem) => carry - (elem.dimensions.outerWidth ?? 0), containerWidth) ?? containerWidth, child);
+
         if (horizontalSpace <= 0) {
             rowIndex++;
             rows[rowIndex] = [];
         }
+
+        // set new left position
+        if (rows[rowIndex]?.[colIndex - 1]?.newPosition) {
+            let precedingElement = rows[rowIndex]?.[colIndex - 1];
+
+            child.newPosition.offset.left = precedingElement.newPosition?.offset.left
+                + precedingElement.dimensions.boundingRect.width
+                + precedingElement.dimensions.margin.right
+        }
         else {
-            child.newPosition.offset.left = rows[rowIndex]?.[colIndex - 1]?.newPosition
-                ? (rows[rowIndex][colIndex - 1].newPosition?.offset.left
-                + rows[rowIndex][colIndex - 1].dimensions.boundingRect.width)
-                : 0;
+            child.newPosition.offset.left = child.dimensions.margin.left;
         }
 
         if (rowIndex > 0) {
+            // set new top position
             child.newPosition.offset.top = getTop(child, rows, rowIndex - 1);
         }
 
@@ -52,13 +70,14 @@ const getTop = (element: ChildElement, rows: ChildElement[][], rowIndex: number)
 
         for (let i = 0; i < currentRow.length; i++) {
             // test for collisions with previous elements
-            const newLeft = element.newPosition?.offset.left;
-            const newRight = newLeft + element.dimensions.boundingRect.width;
+            const newLeft = element.newPosition?.offset.left + element.dimensions.margin.left;
+            const newRight = newLeft + element.dimensions.boundingRect.width + element.dimensions.margin.right;
             const prevLeft = currentRow[i].newPosition?.offset.left;
-            const prevRight = currentRow[i].newPosition?.offset.left + currentRow[i].dimensions.boundingRect.width;
-            const newTop = element.newPosition?.offset.top;
+            const prevRight = currentRow[i].newPosition?.offset.left
+                + currentRow[i].dimensions.boundingRect.width + currentRow[i].dimensions.margin.right;
+            const newTop = element.newPosition?.offset.top + element.dimensions.margin.top;
             const prevTop = currentRow[i].newPosition?.offset.top;
-            const prevBottom = prevTop + currentRow[i].dimensions.boundingRect.height
+            const prevBottom = prevTop + currentRow[i].dimensions.boundingRect.height + currentRow[i].dimensions.margin.bottom
 
             if ((newLeft >= prevLeft
                 && newLeft <= prevRight)
@@ -86,7 +105,7 @@ const getTop = (element: ChildElement, rows: ChildElement[][], rowIndex: number)
 }
 
 const availableHorizontalSpace = (availableSpace: number, child: ChildElement): number => {
-    return availableSpace - child.dimensions.boundingRect.width;
+    return availableSpace - child.dimensions.outerWidth;
 }
 
 export default rowByRow;

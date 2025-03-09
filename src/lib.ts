@@ -92,25 +92,25 @@ const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {
 }
 
 const getElementDimensions = (element: HTMLElement): Dimensions => {
+    const boundingRect = element.getBoundingClientRect();
+    const elementStyle = window.getComputedStyle(element);
+    const marginTop = parseFloat(elementStyle.getPropertyValue('margin-top') ?? 0); 
+    const marginLeft = parseFloat(elementStyle.getPropertyValue('margin-left') ?? 0); 
+    const marginRight = parseFloat(elementStyle.getPropertyValue('margin-right') ?? 0); 
+    const marginBottom = parseFloat(elementStyle.getPropertyValue('margin-bottom') ?? 0); 
+    const outerWidth = boundingRect.width + marginLeft + marginRight;
+    const outerHeight = boundingRect.height + marginTop + marginBottom;
+    const margin = {
+        top: marginTop,
+        left: marginLeft,
+        right: marginRight,
+        bottom: marginBottom,
+    };
+
     return {
-        boundingRect: element.getBoundingClientRect(),
-        padding: {
-            top: parseFloat(element.style.paddingTop),
-            left: parseFloat(element.style.paddingLeft),
-            bottom: parseFloat(element.style.paddingBottom),
-            right: parseFloat(element.style.paddingRight),
-        },
-        margin: {
-            top: parseFloat(element.style.marginTop),
-            left: parseFloat(element.style.marginLeft),
-            bottom: parseFloat(element.style.marginBottom),
-            right: parseFloat(element.style.marginRight),
-        },
-        border: {
-            top: parseFloat(element.style.borderTopWidth),
-            left: parseFloat(element.style.borderLeftWidth),
-            bottom: parseFloat(element.style.borderBottomWidth),
-            right: parseFloat(element.style.borderRightWidth),
-        },
-    }
+        boundingRect,
+        outerWidth,
+        outerHeight,
+        margin
+    };
 }
