@@ -38,7 +38,7 @@ const initLib = (container: HTMLElement, options?: KoelapkakOptions): void => {
     render(rearrangeChildren(container), options);
 
     // start observing
-    observer.observe(container, { childList: true, subtree: true });
+    observer.observe(container, { childList: true, subtree: false });
 
     if (options?.listenForWindowResize === true) {
         window.addEventListener('resize', () => {
