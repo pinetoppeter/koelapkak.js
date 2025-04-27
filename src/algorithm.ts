@@ -38,14 +38,16 @@ const arrange = (children: ChildElement[], containerWidth: number, rows: ChildEl
             rows[rowIndex] = [];
         }
 
-        // set new left position
-        if (rows[rowIndex]?.[colIndex - 1]?.newPosition) {
-            let precedingElement = rows[rowIndex]?.[colIndex - 1];
-
+        let precedingElement = rows[rowIndex]?.[colIndex - 1];
+        
+        // set new left position depending on preceding element
+        if (precedingElement?.newPosition) {
+            
             child.newPosition.offset.left = precedingElement.newPosition?.offset.left
                 + precedingElement.dimensions.boundingRect.width
                 + precedingElement.dimensions.margin.right
         }
+        // without preceding element
         else {
             child.newPosition.offset.left = child.dimensions.margin.left;
         }
