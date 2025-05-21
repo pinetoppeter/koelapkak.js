@@ -1,4 +1,5 @@
-import rowByRow from "./algorithm";
+import spreadCenter from "./algorithms/centerSpread";
+import rowByRow from "./algorithms/rowByRow";
 import Dimensions, { ChildElement, Direction, KoelapkakOptions } from "./types";
 
 export const Koelapkak = {
@@ -66,7 +67,8 @@ const rearrangeChildren = (container: HTMLElement): ChildElement[][] => {
     });
 
     // position elements
-    return rowByRow(containerRect, children);
+    // return rowByRow(containerRect, children);
+    return spreadCenter(containerRect, children);
 }
 
 const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {
@@ -88,7 +90,7 @@ const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {
                 }
             }
         }
-    })
+    });
 }
 
 const getElementDimensions = (element: HTMLElement): Dimensions => {

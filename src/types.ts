@@ -10,7 +10,7 @@ interface Dimensions {
     }
 }
 
-interface Offset {
+export interface Offset {
     top: number,
     left: number,
     bottom?: number,

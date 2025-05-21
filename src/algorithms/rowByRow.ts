@@ -1,4 +1,4 @@
-import Dimensions, { ChildElement } from "./types";
+import Dimensions, { ChildElement } from "../types";
 
 const rowByRow = (containerRect: Dimensions, children: ChildElement[]): ChildElement[][] => {
     // each completed row will be stored in new array
