@@ -1,4 +1,5 @@
-import rowByRow from "./algorithm";
+import CenterSpread from "./algorithms/centerSpread";
+import SortingAlgorithm from "./algorithms/SortingAlgorithm";
 import Dimensions, { ChildElement, Direction, KoelapkakOptions } from "./types";
 
 export const Koelapkak = {
@@ -26,28 +27,30 @@ export const Koelapkak = {
 }
 
 const initLib = (container: HTMLElement, options?: KoelapkakOptions): void => {
+    const sortingAlgorithm = new (options?.sortingAlgorithm ?? CenterSpread);
+
     const observer = new MutationObserver((mutationRecords: MutationRecord[]) => {
         mutationRecords.forEach((record: MutationRecord) => {
             if ((record.target as HTMLElement).children?.length) {
-                render(rearrangeChildren(record.target as HTMLElement), options);
+                render(rearrangeChildren(record.target as HTMLElement, sortingAlgorithm), options);
             }
         });
     });
 
     // initial arranging
-    render(rearrangeChildren(container), options);
+    render(rearrangeChildren(container, sortingAlgorithm), options);
 
     // start observing
     observer.observe(container, { childList: true, subtree: false });
 
     if (options?.listenForWindowResize === true) {
         window.addEventListener('resize', () => {
-            render(rearrangeChildren(container), options);
+            render(rearrangeChildren(container, sortingAlgorithm), options);
         });
     }
 }
 
-const rearrangeChildren = (container: HTMLElement): ChildElement[][] => {
+const rearrangeChildren = (container: HTMLElement, sortingAlgorithm: SortingAlgorithm): ChildElement[][] => {
     // init container dimensions
     let containerRect = getElementDimensions(container);
     let children: ChildElement[] = Array.from(container.children).map((child: Element) => {
@@ -66,7 +69,7 @@ const rearrangeChildren = (container: HTMLElement): ChildElement[][] => {
     });
 
     // position elements
-    return rowByRow(containerRect, children);
+    return sortingAlgorithm.run(containerRect, children);
 }
 
 const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {
@@ -88,7 +91,7 @@ const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {
                 }
             }
         }
-    })
+    });
 }
 
 const getElementDimensions = (element: HTMLElement): Dimensions => {

@@ -1,3 +1,6 @@
+import CenterSpread from "./algorithms/centerSpread"
+import RowByRow from "./algorithms/rowByRow"
+
 interface Dimensions {
     boundingRect: DOMRect,
     outerWidth: number,
@@ -10,7 +13,7 @@ interface Dimensions {
     }
 }
 
-interface Offset {
+export interface Offset {
     top: number,
     left: number,
     bottom?: number,
@@ -25,9 +28,12 @@ export interface ChildElement {
     }
 }
 
+export type SortingAlgorithmOption = typeof CenterSpread | typeof RowByRow
+
 export interface KoelapkakOptions {
     listenForWindowResize?: boolean,
-    direction?: Direction
+    direction?: Direction,
+    sortingAlgorithm?: SortingAlgorithmOption
 }
 
 export enum Direction {
