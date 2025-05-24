@@ -1,11 +1,15 @@
 import Dimensions, { ChildElement } from "../types";
+import SortingAlgorithm from "./SortingAlgorithm";
 
-const rowByRow = (containerRect: Dimensions, children: ChildElement[]): ChildElement[][] => {
-    // each completed row will be stored in new array
-    let rows: ChildElement[][] = [[]];
-    let availableSpace = containerRect.boundingRect.width;
 
-    return arrange(children, availableSpace, rows);
+export default class RowByRow implements SortingAlgorithm {
+    run(containerRect: Dimensions, children: ChildElement[]): ChildElement[][] {
+        // each completed row will be stored in new array
+        let rows: ChildElement[][] = [[]];
+        let availableSpace = containerRect.boundingRect.width;
+    
+        return arrange(children, availableSpace, rows);
+    }
 }
 
 /**
@@ -109,5 +113,3 @@ const getTop = (element: ChildElement, rows: ChildElement[][], rowIndex: number)
 const availableHorizontalSpace = (availableSpace: number, child: ChildElement): number => {
     return availableSpace - child.dimensions.outerWidth;
 }
-
-export default rowByRow;

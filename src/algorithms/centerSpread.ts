@@ -1,10 +1,14 @@
 import Dimensions, { ChildElement, Offset } from "../types";
+import SortingAlgorithm from "./SortingAlgorithm";
 
-const spreadCenter = (containerRect: Dimensions, children: ChildElement[]): ChildElement[][] => {
-    // each completed row will be stored in new array
-    let rows: ChildElement[][] = [[]];
 
-    return arrange(children, rows, containerRect);
+export default class CenterSpread implements SortingAlgorithm {
+    run(containerRect: Dimensions, children: ChildElement[]): ChildElement[][] {
+        // each completed row will be stored in new array
+        let rows: ChildElement[][] = [[]];
+
+        return arrange(children, rows, containerRect);
+    }
 }
 
 const arrange = (children: ChildElement[], rows: ChildElement[][], containerRect: Dimensions): ChildElement[][] => {
@@ -103,5 +107,3 @@ const getTop = (
 
     return top + child.dimensions.margin.top;
 };
-
-export default spreadCenter;

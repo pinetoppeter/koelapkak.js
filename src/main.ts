@@ -2,13 +2,15 @@
  * Entry Point for the DEV preview/testing page
  */
 
+import CenterSpread from "./algorithms/centerSpread";
 import { Koelapkak } from "./lib";
 import { Direction } from "./types";
 
 // init with optional options
 Koelapkak.init('#container', {
   listenForWindowResize: true,
-  direction: Direction.LEFT_TO_RIGHT
+  direction: Direction.RIGHT_TO_LEFT,
+  sortingAlgorithm: CenterSpread
 });
 
 const randomClass = (): string | null => {
