@@ -54,41 +54,44 @@ const tryFindPosition = (
     if (colIndex === 0) {
         // first element in row gets center position
         const availableHorizontalSpace = containerRect.boundingRect.width;
-        left = (availableHorizontalSpace / 2) - (child.dimensions.outerWidth / 2);
+        left = (availableHorizontalSpace / 2) - ((child.dimensions.outerWidth) / 2);
         return {
-            top: getTop(rows, rowIndex),
+            top: getTop(child, rows, rowIndex),
             left
         }
     }
 
     // try left
-    let availableSpaceLeft = Math.min(...rows[rowIndex].map(c => c.newPosition.offset.left)) ?? 0;
+    let availableSpaceLeft = Math.min(...rows[rowIndex].map(c => c.newPosition.offset.left - c.dimensions.margin.left)) ?? 0;
 
-    if (availableSpaceLeft >= child.dimensions.boundingRect.width) {
-        left = availableSpaceLeft - child.dimensions.boundingRect.width;
+    if (availableSpaceLeft >= child.dimensions.outerWidth) {
+        left = availableSpaceLeft - child.dimensions.boundingRect.width - child.dimensions.margin.left;
     }
 
     if (!left) {
+        // try right
         let maxRight = Math.max(...rows[rowIndex].map(c => c.newPosition.offset.left + c.dimensions.boundingRect.width)) ?? 0;
 
-        let availableSpaceRight = containerRect.boundingRect.width - maxRight;
+        let availableSpaceRight = containerRect.outerWidth - maxRight;
 
-        if (availableSpaceRight >= child.dimensions.boundingRect.width) {
+        if (availableSpaceRight >= child.dimensions.outerWidth) {
             left = maxRight;
         }
     }
 
     if (!left) {
+        // give up
         return null;
     }
 
     return {
-        top: getTop(rows, rowIndex),
-        left
+        top: getTop(child, rows, rowIndex),
+        left: left + child.dimensions.margin.left
     };
 }
 
 const getTop = (
+    child: ChildElement,
     rows: ChildElement[][],
     rowIndex: number,
 ): number => {
@@ -98,8 +101,7 @@ const getTop = (
         top = Math.max(...rows[rowIndex - 1].map(c => c.newPosition.offset.top + c.dimensions.boundingRect.height)) ?? 0
     }
 
-    return top;
+    return top + child.dimensions.margin.top;
 };
-
 
 export default spreadCenter;
