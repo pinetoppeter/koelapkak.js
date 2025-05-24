@@ -1,4 +1,4 @@
-import CenterSpread from "./algorithms/centerSpread";
+import { CenterSpread } from "./algorithms/centerSpread";
 import SortingAlgorithm from "./algorithms/SortingAlgorithm";
 import Dimensions, { ChildElement, Direction, KoelapkakOptions } from "./types";
 

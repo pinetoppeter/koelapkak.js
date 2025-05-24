@@ -2,7 +2,7 @@ import Dimensions, { ChildElement, Offset } from "../types";
 import SortingAlgorithm from "./SortingAlgorithm";
 
 
-export default class CenterSpread implements SortingAlgorithm {
+export class CenterSpread implements SortingAlgorithm {
     run(containerRect: Dimensions, children: ChildElement[]): ChildElement[][] {
         // each completed row will be stored in new array
         let rows: ChildElement[][] = [[]];

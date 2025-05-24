@@ -1,8 +1,7 @@
 /**
  * Entry Point for the DEV preview/testing page
  */
-
-import CenterSpread from "./algorithms/centerSpread";
+import { CenterSpread } from "./algorithms/centerSpread";
 import { Koelapkak } from "./lib";
 import { Direction } from "./types";
 

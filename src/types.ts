@@ -1,5 +1,5 @@
-import CenterSpread from "./algorithms/centerSpread"
-import RowByRow from "./algorithms/rowByRow"
+import { CenterSpread } from "./algorithms/centerSpread"
+import { RowByRow } from "./algorithms/rowByRow"
 
 interface Dimensions {
     boundingRect: DOMRect,

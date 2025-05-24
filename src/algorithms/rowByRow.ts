@@ -2,7 +2,7 @@ import Dimensions, { ChildElement } from "../types";
 import SortingAlgorithm from "./SortingAlgorithm";
 
 
-export default class RowByRow implements SortingAlgorithm {
+export class RowByRow implements SortingAlgorithm {
     run(containerRect: Dimensions, children: ChildElement[]): ChildElement[][] {
         // each completed row will be stored in new array
         let rows: ChildElement[][] = [[]];
