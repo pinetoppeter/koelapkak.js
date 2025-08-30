@@ -32,28 +32,41 @@ const initLib = (container: HTMLElement, options?: KoelapkakOptions): void => {
     const observer = new MutationObserver((mutationRecords: MutationRecord[]) => {
         mutationRecords.forEach((record: MutationRecord) => {
             if ((record.target as HTMLElement).children?.length) {
-                render(rearrangeChildren(record.target as HTMLElement, sortingAlgorithm), options);
+                render(rearrangeChildren(record.target as HTMLElement, sortingAlgorithm, options), options);
             }
         });
     });
 
     // initial arranging
-    render(rearrangeChildren(container, sortingAlgorithm), options);
+    render(rearrangeChildren(container, sortingAlgorithm, options), options);
 
     // start observing
     observer.observe(container, { childList: true, subtree: false });
 
     if (options?.listenForWindowResize === true) {
         window.addEventListener('resize', () => {
-            render(rearrangeChildren(container, sortingAlgorithm), options);
+            render(rearrangeChildren(container, sortingAlgorithm, options), options);
         });
     }
 }
 
-const rearrangeChildren = (container: HTMLElement, sortingAlgorithm: SortingAlgorithm): ChildElement[][] => {
+const rearrangeChildren = (container: HTMLElement, sortingAlgorithm: SortingAlgorithm, options?: KoelapkakOptions): ChildElement[][] => {
     // init container dimensions
     let containerRect = getElementDimensions(container);
-    let children: ChildElement[] = Array.from(container.children).map((child: Element) => {
+    let children: Element[] = Array.from(container.children);
+
+    if (options?.ignoreItemsWithClass) {
+        children = children.filter((child: Element) => {
+            if (Array.isArray(options.ignoreItemsWithClass)) {
+                return options.ignoreItemsWithClass.every((ignoreClass: string) => !child.classList.contains(ignoreClass));
+            }
+            else {
+                return !child.classList.contains(options.ignoreItemsWithClass!);
+            }
+        });
+    }
+        
+    let childElements: ChildElement[] = children.map((child: Element) => {
         return {
             element: child,
             dimensions: getElementDimensions(child as HTMLElement),
@@ -69,7 +82,7 @@ const rearrangeChildren = (container: HTMLElement, sortingAlgorithm: SortingAlgo
     });
 
     // position elements
-    return sortingAlgorithm.run(containerRect, children);
+    return sortingAlgorithm.run(containerRect, childElements);
 }
 
 const render = (rows: ChildElement[][], options?: KoelapkakOptions) => {

@@ -33,7 +33,8 @@ export type SortingAlgorithmOption = typeof CenterSpread | typeof RowByRow
 export interface KoelapkakOptions {
     listenForWindowResize?: boolean,
     direction?: Direction,
-    sortingAlgorithm?: SortingAlgorithmOption
+    sortingAlgorithm?: SortingAlgorithmOption,
+    ignoreItemsWithClass?: string | string []
 }
 
 export enum Direction {

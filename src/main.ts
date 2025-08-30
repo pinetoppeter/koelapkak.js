@@ -9,7 +9,8 @@ import { Direction } from "./types";
 Koelapkak.init('#container', {
   listenForWindowResize: true,
   direction: Direction.RIGHT_TO_LEFT,
-  sortingAlgorithm: CenterSpread
+  sortingAlgorithm: CenterSpread,
+  // ignoreItemsWithClass: ['wider', 'smaller']
 });
 
 const randomClass = (): string | null => {
